@@ -13,36 +13,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rianb.todolist.model.Task;
-import com.rianb.todolist.repository.TaskRepository;
+import com.rianb.todolist.service.TaskService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
+
     @Autowired
-    private TaskRepository repository;
+    private TaskService service;
 
     @PostMapping
-    public Task criar(@RequestBody Task task) {
-        return repository.save(task);
+    public Task criar(@Valid @RequestBody Task task) {
+        return service.criar(task);
     }
 
     @GetMapping
     public List<Task> listar() {
-        return repository.findAll();
+        return service.listar();
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        repository.deleteById(id);
+    public void deletar(@PathVariable Long id) {
+        service.deletar(id);
     }
 
     @PutMapping("/{id}")
-    public Task atualizar(@PathVariable Long id, @RequestBody Task novaTask) {
-        Task task = repository.findById(id).orElseThrow();
-
-        task.setTitle(novaTask.getTitle());
-        task.setConcluida(novaTask.isConcluida());
-
-        return repository.save(task);
+    public Task atualizar(@PathVariable Long id, @RequestBody Task task) {
+        return service.atualizar(id, task);
     }
 }
