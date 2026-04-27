@@ -10,11 +10,13 @@ import com.rianb.todolist.repository.UserRepository;
 
 @Service
 public class AuthService {
+    @Autowired
+    private JwtService jwtService;
 
     @Autowired
     private UserRepository repository;
 
-    public User login(LoginRequest request) {
+    public String login(LoginRequest request) {
 
         User user = repository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UnauthorizedException("Email ou senha inválidos"));
@@ -23,6 +25,6 @@ public class AuthService {
             throw new UnauthorizedException("Email ou senha inválidos");
         }
 
-        return user;
+        return jwtService.gerarToken(user.getEmail());
     }
 }
