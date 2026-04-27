@@ -56,4 +56,16 @@ public class GlobalExceptionHandler {
 
         return erro;
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String, Object> handleUnauthorized(UnauthorizedException ex) {
+
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("status", 401);
+        erro.put("error", "Unauthorized");
+        erro.put("message", ex.getMessage());
+
+        return erro;
+    }
 }
