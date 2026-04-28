@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rianb.todolist.dto.LoginRequest;
-import com.rianb.todolist.model.User;
+
 import com.rianb.todolist.service.AuthService;
 
 @RestController
